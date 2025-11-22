@@ -6,3 +6,15 @@
 body{
   @apply bg-[#02012B]
 }
+.soften{
+  @apply transition-all duration-200 ease-in-out
+}
+* {
+  font-family: 'DM Sans';
+}
+button {
+  @apply hover:cursor-pointer
+}
+.heading-text {
+  font-family: 'Bricolage Grotesque';
+}
