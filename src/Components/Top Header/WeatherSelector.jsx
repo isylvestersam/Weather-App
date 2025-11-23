@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import SettingsIcons from '../../assets/icon-units.svg'
+import { WeatherContext } from "../Context/WeatherContext";
 
 
-const WeatherSelector = ({ setSelectedCity, selectedCity, windSpeedUnit, setWindSpeedUnit, precipitationUnit, setPrecipitationUnit, handleSelector }) => {
+const WeatherSelector = (  ) => {
   const [isOpen, setIsOpen] = useState(false)
+  const { state, setCity, setWeatherData, setLoading, setError, setTempUnit, setWindUnit, setPrecipUnit } = useContext(WeatherContext)
   function toggleDropDown() {
     setIsOpen(prev => !prev)
   }

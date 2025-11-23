@@ -1,6 +1,11 @@
-
+import { WeatherContext } from "../Context/WeatherContext";
+import { useContext } from "react";
 
 const FeelsLike = () => {
+  const { state } = useContext(WeatherContext)
+  let feelsLike = state.weatherData?.current
+  // console.log(state);
+  
   const feelsLikeArray = ['feels_like', 'humidity', 'pressure', 'sea_level' ]
   const formatTitle = (str) => {
     return str

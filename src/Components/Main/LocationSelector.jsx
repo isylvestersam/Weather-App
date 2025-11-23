@@ -1,23 +1,28 @@
 import searchIcon from '../../assets/icon-search.svg'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { WeatherContext } from '../Context/WeatherContext'
 
 
 const LocationSelector = ({ }) => {
-  const [location, setLocation] = useState('')
-  const [weatherData, setWeatherData] = useState(null)
-
+  const [inputValue, setInputValue] = useState('')
+  const { state, setCity, setWeatherData, setLoading, setError, setTempUnit } = useContext(WeatherContext)
   function handleInputChange(e) {
-    setLocation(e.target.value)
+    setInputValue(e.target.value)
   }
 
   async function handleSearch(e) {
     e.preventDefault();
-    const data = await fetchWeather(location)
+    if (!inputValue) return;
+
+    setLoading();
+
+    const data = await fetchWeather(inputValue)
     if (data) {
+      setCity(data.location)
       setWeatherData(data)
     }
     else {
-      alert ('Location not found')
+      setError('Location not found')
     }
   }
 
@@ -41,7 +46,8 @@ const LocationSelector = ({ }) => {
       }
 
       const data  = await weatherRes.json()
-      console.log( data );
+      console.log(data);
+      
       
       return { 
         location: name,
@@ -49,7 +55,7 @@ const LocationSelector = ({ }) => {
         current: data.current,
         daily: data.daily,
         hourly: data.hourly
-       }
+      }
 
     } catch (err) {
       console.log(err);
@@ -65,7 +71,7 @@ const LocationSelector = ({ }) => {
       <img src={searchIcon} alt="" />
       <input 
         type="text"
-        value={location}
+        value={inputValue}
         onChange={handleInputChange}
         placeholder="Search for a place..." className="placeholder:text-gray-500 bg-[#25253F] px-3 py-3 rounded-lg focus:outline-none w-full"
         
