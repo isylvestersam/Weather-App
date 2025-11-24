@@ -17,16 +17,16 @@ const WeatherSelector = (  ) => {
     { isOpen && (
       <div className="flex flex-col items-start gap-3 absolute bg-[#25253F] px-3 py-3 w-44 -left-20 top-12 rounded-lg">
         <p className="text-sm text-gray-500">Temperature</p>
-        <button className="w-full text-left">Celsius</button>
-        <button className="w-full text-left">Fahrenheit</button>
+        <button className="w-full text-left" onClick={() => setTempUnit('celsius')} >Celsius</button>
+        <button className="w-full text-left" onClick={() => setTempUnit('fahrenheit')}>Fahrenheit</button>
         <div className="border-b border-gray-700 h-px w-full"></div>
         <p className="text-sm text-gray-500">Wind Speed</p>
-        <button className="w-full text-left">km/h</button>
-        <button className="w-full text-left">mph</button>
+        <button className="w-full text-left" onClick={() => setWindUnit('kmh')} >km/h</button>
+        <button className="w-full text-left" onClick={() => setWindUnit('mph')}>mph</button>
         <div className="border-b border-gray-700 h-px w-full"></div>
         <p className="text-sm text-gray-500">Precipitation</p>
-        <button className="w-full text-left">Millimeters (mm)</button>
-        <button className="w-full text-left">Inches (in)</button>
+        <button className="w-full text-left" onClick={() => setPrecipUnit('mm')}>Millimeters (mm)</button>
+        <button className="w-full text-left" onClick={() => setPrecipUnit('in')}>Inches (in)</button>
       </div>
     )}
   </div> );
