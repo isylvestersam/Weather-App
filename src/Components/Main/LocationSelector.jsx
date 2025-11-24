@@ -1,5 +1,5 @@
 import searchIcon from '../../assets/icon-search.svg'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { WeatherContext } from '../Context/WeatherContext'
 
 
@@ -26,6 +26,59 @@ const LocationSelector = ({ }) => {
     }
   }
 
+  useEffect(() => {
+    if (!navigator.geolocation) return setError('Geolocation not supported')
+
+    setLoading()
+    navigator.geolocation.getCurrentPosition(
+      async ({ coords }) => {
+        const data = await fetchWeatherByCoords(coords.latitude, coords.longitude)
+        if (data) {
+          setCity(data.location)
+          setWeatherData(data)
+        } else {
+          setError('Could not fetch weather for your location')
+        }
+      },
+      () => setError('Location Access Denied')
+    )
+  }, [])
+
+   async function fetchWeatherByCoords(lat, lon) {
+  try {
+    const weatherRes = await fetch(
+      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
+      `&hourly=temperature_2m,relativehumidity_2m,windspeed_10m,precipitation,weathercode` +
+      `&current_weather=true` +
+      `&daily=temperature_2m_max,temperature_2m_min,weather_code` +
+      `&timezone=auto`
+    )
+
+    if (!weatherRes.ok) throw new Error('Failed to fetch weather')
+
+    const data = await weatherRes.json()
+    const currentHour = data.current_weather.time.slice(0, 13)
+    const currentIndex = data.hourly.time.findIndex(
+      t => t.slice(0, 13) === currentHour
+    )
+
+    return { 
+      location: 'Your Location',
+      country: '',
+      current: {
+        ...data.current_weather,
+        humidity: currentIndex !== -1 ? data.hourly.relativehumidity_2m[currentIndex] : null,
+        precipitation: currentIndex !== -1 ? data.hourly.precipitation[currentIndex] : null
+      },
+      daily: data.daily,
+      hourly: data.hourly
+    }
+  } catch (err) {
+    console.log(err)
+    return null
+  }
+}
+
   async function fetchWeather(city) {
     try {
       const geoRes = await fetch(
@@ -37,22 +90,37 @@ const LocationSelector = ({ }) => {
       const { latitude, longitude, name, country } = geoData.results[0]
       
       const weatherRes = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,is_day,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=temperature_2m,precipitation&timezone=auto`
-      )
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}` +
+      `&hourly=temperature_2m,relativehumidity_2m,windspeed_10m,precipitation,weathercode` +
+      `&current_weather=true` +
+      `&daily=temperature_2m_max,temperature_2m_min,weather_code` +
+      `&timezone=auto`
+      ) 
+      
       if (!weatherRes.ok) {
         const errorData = await weatherRes.json()
-        console.error('API ERROR:', errorData)
         throw new Error(errorData || 'Failed to fetch weather')
       }
 
-      const data  = await weatherRes.json()
-      console.log(data);
+      const data  = await weatherRes.json();
+
+      const currentHour = data.current_weather.time.slice(0, 13)
+      const currentIndex = data.hourly.time.findIndex(
+        t => t.slice(0, 13) === currentHour)
       
-      
+
       return { 
         location: name,
         country,
-        current: data.current,
+        current: {
+          ...data.current_weather,
+          humidity: currentIndex !== 1
+            ? data.hourly.relativehumidity_2m[currentIndex]
+            : null,
+          precipitation: currentIndex !== 1
+            ? data.hourly.precipitation[currentIndex]
+            : null
+        },
         daily: data.daily,
         hourly: data.hourly
       }

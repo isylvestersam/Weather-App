@@ -5,12 +5,13 @@ import WeatherSelector from './Components/Top Header/WeatherSelector';
 import LocationSelector from './Components/Main/LocationSelector';
 import ShowCaseBar from './Components/Main/ShowCaseBar';
 import FeelsLike from './Components/Main/FeelsLike';
+import DailyForecast from './Components/Main/DailyForecast';
+import HourlyForecast from './Components/Main/Hourly Forecast';
 
 function App() {
   function handleSelector( value, setValue ){
     setValue(value)
   }
-
   return (
     <>
       <div className='container pt-12 px-4 mx-auto flex flex-col justify-center text-white'>
@@ -25,7 +26,9 @@ function App() {
         <LocationSelector />
         <ShowCaseBar />
         <FeelsLike />
-
+        <h3 className='mt-10 mb-4 text-xl'>Daily Forecast</h3>
+        <DailyForecast />
+        <HourlyForecast />
       </div>
     </>
   )

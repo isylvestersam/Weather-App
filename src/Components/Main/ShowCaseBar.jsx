@@ -9,10 +9,9 @@ import { useContext } from 'react'
 
 const ShowCaseBar = () => {
   const { state } = useContext(WeatherContext)
-  // console.log(state);
     let currCountry = state.weatherData?.country || 'Berlin'
     let currLocation = state?.location || 'Germany'
-    let currTemp = state.weatherData?.current.temperature_2m || '60'
+    let currTemp = state.weatherData?.current.temperature || '60'
     let isDay = state.weatherData?.current.is_day
 
   
