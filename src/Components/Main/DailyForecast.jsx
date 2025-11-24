@@ -20,7 +20,7 @@ const DailyForecast = () => {
 
   return ( <div className=" grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-4 text-center">
         {dailyForecastData.map((data) => (
-          <div key={data.day} className="bg-[#25253F] flex flex-col items-center justify-between rounded-lg h-48 py-5 px-3 ">
+          <div key={data.day} className="bg-[#25253F] border-gray-700 border flex flex-col items-center justify-between rounded-lg h-48 py-5 px-3 ">
             <p className="text-lg">{data.day}</p>
             <img src={data.icon} className="w-20"/>
             <div className="flex gap-7">
