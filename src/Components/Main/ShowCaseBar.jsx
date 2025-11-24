@@ -4,7 +4,7 @@ import { WeatherContext } from '../Context/WeatherContext'
 import { useContext } from 'react';
 import { WeatherCodeToIcon } from '../Helpers/WeatherCodeToIcon';
 import { WeatherCodeToComment } from '../Helpers/WeatherCodeToComment';
-import { converPrecip, convertTemp, convertWind } from '../Helpers/ConversionHelpers';
+import { convertPrecip, convertTemp, convertWind } from '../Helpers/ConversionHelpers';
 
 const ShowCaseBar = () => {
   const { state } = useContext(WeatherContext)
@@ -14,14 +14,11 @@ const ShowCaseBar = () => {
   let currCountry = state.weatherData?.country || ''
   let separator = currCountry === '' ? '' : ','
   let currLocation = state?.location || ''
-  // let currTemp = state.weatherData?.current.temperature || '--';
   let currWeatherCode = state.weatherData?.current.weather_code ?? 0 ;
   let currIcon = WeatherCodeToIcon(currWeatherCode);
   let currComment = WeatherCodeToComment(currWeatherCode)
 
-  let currTemp = convertTemp(state.weatherData?.current.temperature || '--', state.temperatureUnit)
-  
-  console.log(currWeatherCode);
+  let currTemp = Math.round(convertTemp(state.weatherData?.current.temperature, state.temperatureUnit))
   
   const formatted = new Date().toLocaleDateString('en-US', {
     weekday: 'long',

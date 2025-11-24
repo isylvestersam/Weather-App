@@ -1,27 +1,52 @@
 import { WeatherContext } from "../Context/WeatherContext";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import dropdownIcons from '../../assets/icon-dropdown.svg'
 import { WeatherCodeToIcon } from "../Helpers/WeatherCodeToIcon";
+import { convertTemp } from "../Helpers/ConversionHelpers";
 
 const HourlyForecast = () => {
   const {state} = useContext(WeatherContext);
-  if (!state.weatherData) return null
-  console.log(state);
+  const dropdownRef = useRef(null);
+  
+  const today = state.weatherData?.daily.time[0] || '';
+  
+  
+  const [selectedDay, setSelectedDay] = useState(today);
+  const [isOpen, setIsOpen ] = useState(false)
 
+  
   const handleSelectDay = (day) => {
     setSelectedDay(day);
     setIsOpen(false)
   }
+  
+  const handleToggleOpen = () => setIsOpen(prev => !prev);
 
-  const today = state.weatherData.daily.time[0];
-  const [selectedDay, setSelectedDay] = useState(today);
-  const [isOpen, setIsOpen ] = useState(false)
-
-  const handleToggleOpen = () => setIsOpen(prev => !prev)
+  useEffect(() => {
+    if (state.weatherData) {
+      setSelectedDay(state.weatherData.daily.time[0])
+    }
+  }, [state.weatherData]);
+  
+  useEffect(() => {
+    function handleClickOutside(e){
+      if (!dropdownRef.current) return;
+      if (dropdownRef.current.contains(e.target)) {
+        return
+      }
+      setIsOpen(false)
+      
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+  
+  if (!state.weatherData) return null
+  let currTempUnit = state.temperatureUnit
 
   const hoursForDay = state.weatherData.hourly.time.map((timeStr, i) => ( {
     time: timeStr,
-    temp: state.weatherData.hourly.temperature_2m[i],
+    temp: convertTemp(state.weatherData.hourly.temperature_2m[i], currTempUnit),
     weatherCode: state.weatherData.hourly.weathercode[i],
     icon: WeatherCodeToIcon(state.weatherData.hourly.weathercode[i])
   }))
@@ -30,7 +55,7 @@ const HourlyForecast = () => {
   return ( <div className="mt-5 bg-[#25253F] border border-gray-700 rounded-lg pt-8 pb-5 px-5 mb-24 lg:mb-0">
     <div className="flex justify-between items-center mb-2">
       <p className="text-lg">Hourly forecast</p>
-      <div className="relative">
+      <div className="relative" ref={dropdownRef}>
         <button
           onClick={handleToggleOpen}
           className="bg-[#3C3B5D] border border-[#3E3E58] hover:bg-[#575682] soften px-5 py-2 rounded-md flex gap-2" >
@@ -49,7 +74,8 @@ const HourlyForecast = () => {
                 onClick={() => handleSelectDay(day)}
                 className={ selectedDay === day ? 'bg-[#2F2F49] rounded-lg text-sm text-left py-2 px-2' : 'hover:bg-[#2F2F49] rounded-lg text-sm text-left py-2 px-2' }
                 >
-                { new Date(day).toLocaleDateString('en-US', { weekday: 'long' }) }
+                { new Date(day + "T00:00").toLocaleDateString('en-US', { weekday: 'long' }) }
+
               </button>
             ))
           }

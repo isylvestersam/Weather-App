@@ -1,6 +1,7 @@
 import { WeatherContext } from "../Context/WeatherContext";
 import { useContext } from "react";
 import { WeatherCodeToIcon } from "../Helpers/WeatherCodeToIcon";
+import { convertTemp } from "../Helpers/ConversionHelpers";
 
 const DailyForecast = () => {
   const { state } = useContext(WeatherContext)
@@ -12,8 +13,8 @@ const DailyForecast = () => {
 
   const dailyForecastData = time.map((date, i) => ({
     day: new Date(date).toLocaleDateString('en-US', { weekday: 'short' }),
-    max: temperature_2m_max[i],
-    min: temperature_2m_min[i],
+    max: convertTemp(temperature_2m_max[i], state.temperatureUnit),
+    min: convertTemp(temperature_2m_max[i], state.temperatureUnit),
     weatherCode: weather_code[i],
     icon: WeatherCodeToIcon(weather_code[i])
   }))
