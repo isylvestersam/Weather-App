@@ -1,17 +1,17 @@
 import { WeatherContext } from "../Context/WeatherContext";
 import { useContext } from "react";
 import { calculateFeelsLike } from "../Helpers/CalculateFeelsLike";
+import { convertPrecip, convertWind } from "../Helpers/ConversionHelpers";
 
 const FeelsLike = () => {
   const { state } = useContext(WeatherContext)
   let currTemp = state.weatherData?.current.temperature
   let currHumidty = state.weatherData?.current.humidity
-  let currWindSpeed = state.weatherData?.current.windspeed
-  let currPrecip = state.weatherData?.current.precipitation
-  let currFeelsLike = calculateFeelsLike( currTemp, currWindSpeed, currPrecip )
-  let currtempUnit = state?.temperatureUnit === 'celsius' ? '"°C"' : "°F"
   let currwindSpeedUnit = state?.windUnit === 'kmh' ? 'kmh' : 'mph'
   let currPrecipUnit = state?.precipUnit === 'mm' ? 'mm' : 'in'
+  let currWindSpeed = convertWind(state.weatherData?.current.windspeed, currwindSpeedUnit)
+  let currPrecip = convertPrecip(state.weatherData?.current.precipitation, currPrecipUnit )
+  let currFeelsLike = calculateFeelsLike( currTemp, currWindSpeed, currPrecip )
 
 
   const feelsLikeData = [

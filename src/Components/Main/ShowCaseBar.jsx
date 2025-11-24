@@ -4,6 +4,7 @@ import { WeatherContext } from '../Context/WeatherContext'
 import { useContext } from 'react';
 import { WeatherCodeToIcon } from '../Helpers/WeatherCodeToIcon';
 import { WeatherCodeToComment } from '../Helpers/WeatherCodeToComment';
+import { converPrecip, convertTemp, convertWind } from '../Helpers/ConversionHelpers';
 
 const ShowCaseBar = () => {
   const { state } = useContext(WeatherContext)
@@ -13,10 +14,12 @@ const ShowCaseBar = () => {
   let currCountry = state.weatherData?.country || ''
   let separator = currCountry === '' ? '' : ','
   let currLocation = state?.location || ''
-  let currTemp = state.weatherData?.current.temperature || '--';
+  // let currTemp = state.weatherData?.current.temperature || '--';
   let currWeatherCode = state.weatherData?.current.weather_code ?? 0 ;
   let currIcon = WeatherCodeToIcon(currWeatherCode);
   let currComment = WeatherCodeToComment(currWeatherCode)
+
+  let currTemp = convertTemp(state.weatherData?.current.temperature || '--', state.temperatureUnit)
   
   console.log(currWeatherCode);
   
@@ -37,7 +40,7 @@ const ShowCaseBar = () => {
     </div>
     <div className='flex items-center justify-around'>
       <img src={currIcon} className='w-32' />
-      <h3 className='text-[5rem] italic font-semibold'>{currTemp}°</h3>
+      <h3 className='text-[3.5rem] italic font-semibold'>{currTemp}°</h3>
     </div>
   </div> );
 }
