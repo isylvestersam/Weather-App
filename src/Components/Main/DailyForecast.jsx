@@ -1,6 +1,6 @@
 import { WeatherContext } from "../Context/WeatherContext";
 import { useContext } from "react";
-import { WeatherCodeToIcon } from "../Math Helpers/WeatherCodeToIcon";
+import { WeatherCodeToIcon } from "../Helpers/WeatherCodeToIcon";
 
 const DailyForecast = () => {
   const { state } = useContext(WeatherContext)

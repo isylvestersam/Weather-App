@@ -1,6 +1,6 @@
 import { WeatherContext } from "../Context/WeatherContext";
 import { useContext } from "react";
-import { calculateFeelsLike } from "../Math Helpers/CalculateFeelsLike";
+import { calculateFeelsLike } from "../Helpers/CalculateFeelsLike";
 
 const FeelsLike = () => {
   const { state } = useContext(WeatherContext)

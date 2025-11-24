@@ -12,7 +12,7 @@ const WeatherSelector = (  ) => {
 
   return ( <div className="text-white relative z-50">
     <button className=" bg-[#25253F] flex items-center gap-1 text-white px-7 py-2 rounded-lg hover:cursor-pointer hover:bg-[#2F2F48] soften" onClick={() => toggleDropDown()}>
-      <span><img src={SettingsIcons} alt="" /></span>
+      <span className={ isOpen ? 'rotate-180 transition-all duration-300 ' : ' rotate-0 transition-all duration-300 ' } ><img src={SettingsIcons}  /></span>
       Units</button>
     { isOpen && (
       <div className="flex flex-col items-start gap-3 absolute bg-[#25253F] px-3 py-3 w-44 -left-20 top-12 rounded-lg">

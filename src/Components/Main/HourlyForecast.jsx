@@ -1,7 +1,7 @@
 import { WeatherContext } from "../Context/WeatherContext";
 import { useContext, useState } from "react";
 import dropdownIcons from '../../assets/icon-dropdown.svg'
-import { WeatherCodeToIcon } from "../Math Helpers/WeatherCodeToIcon";
+import { WeatherCodeToIcon } from "../Helpers/WeatherCodeToIcon";
 
 const HourlyForecast = () => {
   const {state} = useContext(WeatherContext);

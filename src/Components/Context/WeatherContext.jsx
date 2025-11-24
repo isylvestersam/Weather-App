@@ -32,6 +32,8 @@ function weatherReducer(state, action){
       return { ...state, temperatureUnit: action.payload }
     case SET_PRECIP_UNIT:
       return { ...state, precipUnit: action.payload }
+    case SET_WIND_UNIT:
+      return { ...state, windUnit: action.payload }
     default:
     return state
   }
