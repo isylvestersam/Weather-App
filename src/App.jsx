@@ -6,7 +6,7 @@ import LocationSelector from './Components/Main/LocationSelector';
 import ShowCaseBar from './Components/Main/ShowCaseBar';
 import FeelsLike from './Components/Main/FeelsLike';
 import DailyForecast from './Components/Main/DailyForecast';
-import HourlyForecast from './Components/Main/Hourly Forecast';
+import HourlyForecast from './Components/Main/HourlyForecast';
 
 function App() {
   function handleSelector( value, setValue ){
@@ -19,7 +19,6 @@ function App() {
           <div className='flex justify-between'>
             <img src={logo} />
             <WeatherSelector />
-              
           </div>
         </header>
         <h3 className='text-white mx-auto font-semibold text-5xl text-center my-6 heading-text '>How's the sky looking today?</h3>
