@@ -7,7 +7,7 @@ import checkMarkIcon from '../../assets/icon-checkmark.svg'
 const WeatherSelector = (  ) => {
   const [isOpen, setIsOpen] = useState(false)
   const { state, setCity, setWeatherData, setLoading, setError, setTempUnit, setWindUnit, setPrecipUnit } = useContext(WeatherContext)
-  const baseClasses = `flex flex-row justify-between w-full text-left py-2 px-2 rounded-lg`
+  const baseClasses = `flex flex-row justify-between w-full text-left py-2 px-2 rounded-lg hover:bg-[#2F2F59] `
   const dropDownRef = useRef(null)
   let currTempUnit = state.temperatureUnit;
   let currWindUnit = state.windUnit

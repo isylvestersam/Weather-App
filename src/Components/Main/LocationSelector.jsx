@@ -8,6 +8,7 @@ const LocationSelector = ({ }) => {
   const { state, setCity, setWeatherData, setLoading, setError, setTempUnit } = useContext(WeatherContext)
   function handleInputChange(e) {
     setInputValue(e.target.value)
+    setError(null)
   }
 
   async function handleSearch(e) {

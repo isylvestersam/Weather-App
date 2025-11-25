@@ -7,8 +7,14 @@ import ShowCaseBar from './Components/Main/ShowCaseBar';
 import FeelsLike from './Components/Main/FeelsLike';
 import DailyForecast from './Components/Main/DailyForecast';
 import HourlyForecast from './Components/Main/HourlyForecast';
+import { WeatherContext, WeatherProvider } from './Components/Context/WeatherContext';
+import { useContext } from 'react';
 
 function App() {
+  const { state } = useContext(WeatherContext)
+  let error = state.error;
+  console.log(state);
+  
   function handleSelector( value, setValue ){
     setValue(value)
   }
@@ -23,12 +29,21 @@ function App() {
         </header>
         <h3 className='text-white mx-auto font-semibold text-5xl text-center my-6 heading-text '>How's the sky looking today?</h3>
         <LocationSelector />
-        <div className='flex flex-col lg:grid lg:grid-cols-3 lg:auto-rows-auto lg:gap-6 lg:mt-12'>
-          <ShowCaseBar />
-          <FeelsLike />
-          <DailyForecast />
-          <HourlyForecast />
-        </div>
+        {
+          error === 'Location not found' && (
+            <h3 className='text-3xl mx-auto mt-8 lg:mt-12 font-semibold'>No Seach Result Found</h3>
+          )
+        }
+        {
+          !error && state.weatherData && (
+            <div className='flex flex-col lg:grid lg:grid-cols-3 lg:auto-rows-auto lg:gap-6 lg:mt-12'>
+              <ShowCaseBar />
+              <FeelsLike />
+              <DailyForecast />
+              <HourlyForecast />
+            </div>
+          )
+        }
       </div>
     </>
   )

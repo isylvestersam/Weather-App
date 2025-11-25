@@ -31,12 +31,12 @@ const ShowCaseBar = () => {
     <img src={showcaseImgDesktop} className='absolute inset-0 w-full h-full object-cover  hidden lg:block -z-50 '/>
     <img src={showcaseImgMobile} className='absolute inset-0  w-full h-full object-cover block lg:hidden -z-50  '/>
     <div className='text-center'>
-      <h3 className='text-3xl font-semibold'>{ `${currLocation}${separator} ${currCountry}` }</h3>
-      <p className="text-gray-300 ">{formatted}</p>
-      <p> {currComment} </p>
+      <h3 className='text-3xl font-semibold lg:text-5xl lg:mb-1 lg:mt-6'>{ `${currLocation}${separator} ${currCountry}` }</h3>
+      <p className="text-gray-300 lg:text-xl">{formatted}</p>
+      <p className='lg:text-lg'> {currComment}. </p>
     </div>
-    <div className='flex items-center justify-around'>
-      <img src={currIcon} className='w-32' />
+    <div className='flex items-center justify-around '>
+      <img src={currIcon} className='w-32  ' />
       <h3 className='text-[3.5rem] italic font-semibold'>{currTemp}°</h3>
     </div>
   </div> );
