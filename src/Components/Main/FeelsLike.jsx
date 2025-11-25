@@ -30,14 +30,14 @@ const FeelsLike = () => {
   let currTempUnit = state.temperatureUnit || '°C'
   
 
-  return ( <div className="mt-5 grid grid-cols-2 gap-4 lg:flex lg:gap-6">
+  return ( <div className="mt-5 grid grid-cols-2 gap-4 lg:flex lg:gap-6 lg:col-start-1 lg:col-span-2 lg:row-start-3 lg:row-span-1 lg:mt-0">
     {
       feelsLikeData.map((item) => {
         return (
-          <div className="bg-[#25253F] flex  flex-col justify-between h-28 py-4 px-4 rounded-xl border border-gray-700 "
+          <div className="bg-[#25253F] flex  flex-col justify-between h-28 py-4 px-4 rounded-xl border border-gray-700 lg:w-full"
           key={item.key}>
-            <h3 className="text-gray-300">{formatTitle(item.key)}</h3>
-            <p className="text-4xl">{`${item.value} ${item.unit}`} </p>
+            <h3 className="text-gray-300 truncate">{formatTitle(item.key)}</h3>
+            <p className="text-4xl truncate">{`${item.value} ${item.unit}`} </p>
           </div>
         )
       })

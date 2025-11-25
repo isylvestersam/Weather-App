@@ -51,7 +51,7 @@ const HourlyForecast = () => {
   }))
   .filter(hours => hours.time.startsWith(selectedDay))
 
-  return ( <div className="mt-5 bg-[#25253F] border border-gray-700 rounded-lg pt-8 pb-5 px-5 mb-24 lg:mb-0">
+  return ( <div className="mt-5 bg-[#25253F] border border-gray-700 rounded-lg pt-5 pb-5 px-5 mb-12 lg:mb-0 lg:col-start-3 lg:col-span-1 lg:row-start-1 lg:row-span-4 lg:mt-0">
     <div className="flex justify-between items-center mb-2">
       <p className="text-lg">Hourly forecast</p>
       <div className="relative" ref={dropdownRef}>
@@ -83,7 +83,7 @@ const HourlyForecast = () => {
         }
       </div>
     </div>
-    <div className="flex flex-col gap-3 h-100 overflow-auto ">
+    <div className="mt-5 flex flex-col gap-3 h-100 lg:h-140 overflow-auto ">
       {
         hoursForDay.map(hour => (
           <div 

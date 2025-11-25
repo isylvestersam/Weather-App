@@ -14,7 +14,7 @@ function App() {
   }
   return (
     <>
-      <div className='container pt-12 px-4 mx-auto flex flex-col justify-center text-white'>
+      <div className='container pt-12 px-4 mx-auto flex flex-col justify-center text-white lg:pb-16'>
         <header>
           <div className='flex justify-between'>
             <img src={logo} />
@@ -23,11 +23,12 @@ function App() {
         </header>
         <h3 className='text-white mx-auto font-semibold text-5xl text-center my-6 heading-text '>How's the sky looking today?</h3>
         <LocationSelector />
-        <ShowCaseBar />
-        <FeelsLike />
-        <h3 className='mt-10 mb-4 text-xl'>Daily Forecast</h3>
-        <DailyForecast />
-        <HourlyForecast />
+        <div className='flex flex-col lg:grid lg:grid-cols-3 lg:auto-rows-auto lg:gap-6 lg:mt-12'>
+          <ShowCaseBar />
+          <FeelsLike />
+          <DailyForecast />
+          <HourlyForecast />
+        </div>
       </div>
     </>
   )
