@@ -10,7 +10,6 @@ const HourlyForecast = () => {
   
   const today = state.weatherData?.daily.time[0] || '';
   
-  
   const [selectedDay, setSelectedDay] = useState(today);
   const [isOpen, setIsOpen ] = useState(false)
 
